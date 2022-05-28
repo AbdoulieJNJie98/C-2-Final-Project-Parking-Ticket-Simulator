@@ -1,0 +1,99 @@
+#include "pch.h"
+#include "parkingticket.h"
+#include <iomanip>
+#include <iostream>
+#include <string>
+
+using namespace std;
+// cpp file that will define functions made in ParkingTicket class
+
+/*
+	definition of constructor that uses the 3 different class objects
+*/
+
+
+ParkingTicket::ParkingTicket(const ParkedCar &violator, const PoliceOfficer &police, const ParkingMeter &parkingMeter)
+{
+	officer = police;
+	car = violator;
+	meter = parkingMeter;
+
+	calculateFine(); // call to function that will calculate the fine amount
+	printTicket(); // call to function that will print ticket
+
+}
+
+/*
+	This function will be used to calculate the overall amount of the fine
+*/
+void ParkingTicket::calculateFine()
+{
+	// this integer will be used to reference the number of
+	// minutes that have gone over the purchased parking time
+
+	int overParkingTime = (1 + (car.getMinutes() - meter.getPurchasedMinutes()) / 60);
+
+	// if statement that will determine if the fine will be the base fine, or
+	// the base fine plus the additional fine
+
+	if (overParkingTime < 2)
+	{
+		fine = BASE_FINE;
+	}
+	else
+	{
+		fine = BASE_FINE + (HOURLY_FINE * overParkingTime);
+		additionalFine = fine - BASE_FINE;
+	}
+
+}
+
+/*
+	This function will display the ticket in a format that looks similar to
+	an actual parking ticket
+*/
+void ParkingTicket::printTicket()
+{
+		if (car.getMinutes() > meter.getPurchasedMinutes())
+		{
+			cout << "ATLANTA POLICE DEPARTMENT - PARKING VIOLATION TICKET\n\n";
+			cout << "MINUTES PARKED: " << car.getMinutes() << "\n";
+			cout << "PURCHASED MINUTES: " << meter.getPurchasedMinutes() << "\n";
+
+			// display the police officers information
+			cout << "--------------------------------------\n\n";
+			cout << "OFFICER ON DUTY:\n";
+			cout << officer << endl;  // police officer object that will be displayed in a pre-made format
+
+			// display the car's  information
+			cout << "---------------------------------------\n\n";
+			cout << "VIOLATOR'S CAR:\n";
+			cout << car << endl; // parked car  object that will be displayed in a pre-made format
+
+			// fixed decimal precision that will only display 2 decimals
+			cout << fixed << setprecision(2);
+
+			// display the fine
+			cout << "FINE AMOUNT:\n";
+			cout << "---------------------------------------\n\n";
+
+			// if statement that will show how the fine is calculated and will
+			// will display the fine amount
+			if (getFine() == BASE_FINE)
+			{
+				cout << "BASE FINE: " << BASE_FINE << endl;
+			}
+			else
+			{
+				cout << "BASE FINE: " << BASE_FINE << "+\n";
+				cout << "ADDITIONAL FINE: " << getAdditionalFine() << endl;
+			}
+
+			cout << "---------------------\n";
+			cout << "TOTAL FINE: " << getFine() << endl << endl;
+		}
+		if (car.getMinutes() < meter.getPurchasedMinutes() || car.getMinutes() == meter.getPurchasedMinutes())
+		{
+			cout << "This car has not violated the parking limit.\n";
+		}
+}

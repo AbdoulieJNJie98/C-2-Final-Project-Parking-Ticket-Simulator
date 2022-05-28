@@ -1,0 +1,143 @@
+// Parking Ticket Simulator main.cpp
+// Abdoulie J NJie
+// 11/19/19
+// CIST 2362
+/*
+	This program will simulate a parking ticket that is printed out. The
+	parking ticket will conisist of the following information: the car make,
+	the car model, the car color, the car's license plate number, the number of
+	minutes the car was parked, the number of minutes that were purchased for the
+	parking space, the overall fine total, the name of the police officer that wrote the
+	ticket, and the badge number of the offier.
+*/
+
+#include "pch.h"
+#include "parkedcar.h"
+#include "parkingmeter.h"
+#include "policeofficer.h"
+#include "parkingticket.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// function prototype
+bool isNumberOfTicketsValid(int);
+
+int main()
+{
+	int numberOfTickets; // integer that will hold the actual amount of tickets
+
+
+	// prompt to enter tickets
+	cout << "Enter the number of tickets you would like to make: ";
+	cin >> numberOfTickets;
+
+
+	// function call that will check input
+	isNumberOfTicketsValid(numberOfTickets);
+
+	// integer that will be used to be thrown as an exception in a try and catch
+	int attempts = 5;
+
+	// try and catch that will check the user's input for number of tickests
+	try
+	{
+		if (!isNumberOfTicketsValid(numberOfTickets))
+		{
+			throw attempts;
+		}
+	}
+	catch (int attempts)
+	{
+		// loop that will continue until the user enters a valid input, or reaches the max number of attempts
+		while (!isNumberOfTicketsValid(numberOfTickets))
+		{
+			cout << "Number of attempts left: " << (attempts) << "\n\n";
+
+			cout << "The input entered was invalid, please enter a valid entry:\n";
+
+			cin.clear();
+			cin.ignore();
+			cin >> numberOfTickets;
+			cout << endl;
+
+			--attempts;
+
+			// if statement that will end the program if max attemps are reached
+			if (attempts == 0)
+			{
+				cout << "The number of attemps had been reached.\n"
+					<< "The program will now shut down.\n";
+
+				exit(1);
+			}
+		}
+	}
+	// pointer that will make an object that will use ParkedCar object
+	ParkedCar *car = NULL;
+
+	car = new ParkedCar[numberOfTickets]; // an array of objects based off the number of tickets
+
+	// pointer that will make an object that will use ParkingMeter object
+	 ParkingMeter *meter = NULL;
+
+	 meter = new ParkingMeter[numberOfTickets];  // an array of objects based off the number of tickets
+
+	// pointer that will make an object that will use PoliceOfficer object
+	 PoliceOfficer *officer = NULL;
+
+	 officer = new PoliceOfficer[numberOfTickets];  // an array of objects based off the number of tickets
+
+	 // for loop that will prompt the user to enter the information of the PoliceOfficer,
+	 // ParkedCar, and ParkingMeter objects. Until the number of tickets entered have been
+	 // fulfilled
+	 for (int index = 0; index < numberOfTickets; index++)
+	 {
+		 // prompt user to enter police name
+		 cout << "Please enter the officer info:\n";
+		 cin >> officer[index];
+		 cout << "\n";
+
+		 // prompt user to enter car information
+		 cout << "Please enter the car's info:\n";
+		 cin >> car[index];
+		 cout << endl;
+
+		 // prompt user to enter the parking meter information
+		 cin >> meter[index];
+		 cout << endl;
+
+		 // parking ticket object that will reference the other classes objects
+		 ParkingTicket ticket(car[index], officer[index], meter[index]);
+
+		 // display ticket information
+		 ticket;
+	 }
+	return  0;
+}
+
+
+/*
+	This function will be used to make sure that the input
+	of number of tickets is not an number larger than 9999,
+	nor it is a number less than 0. As well as to ensure that
+	nothing but a valid input is entered.
+*/
+bool isNumberOfTicketsValid(int numberOfT)
+{
+	// boolean variable
+	bool status = false;
+	
+	// if statment that will determine what status will be returned
+	if (numberOfT > 0 && numberOfT < 9999)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+	return status;
+}

@@ -1,0 +1,86 @@
+					
+						
+	main file:
+	
+		// prompt the user to enter the information of the object
+	cout << "Please enter the following information:\n";
+	cin >> car1;
+	cin >> officer1;
+
+	cout << "Please enter the following information:\n";
+	cin >> car2;
+	cin >> officer2;
+	
+		// objects that will hold car information
+	ParkedCar car1;
+	ParkedCar car2;
+
+	// objects that will hold police information
+	PoliceOfficer officer1;
+	PoliceOfficer officer2;
+	
+parked car cpp:
+	// overloaded cin >> operator
+istream &operator >> (istream &strim, ParkedCar &obj)
+{
+	cout << "Enter the car's make: ";
+
+	getline (strim, obj.make);
+	cout << endl;
+
+	cout << "Enter the car's model: ";
+	getline(strim, obj.model);
+	cout << endl;
+
+	cout << "Enter the car's color: ";
+	getline(strim, obj.color);
+	cout << endl;
+
+	cout << "Enter the car's license plate number: ";
+	getline(strim, obj.licenseNum);
+	cout << endl;
+
+	cout << "Enter the number of minutes the car was parked: ";
+	strim >> obj.numOfMin;
+	cout << endl;
+
+	return strim;
+}
+
+
+parked car header:
+	friend istream &operator >> (istream &, ParkedCar &);
+	
+	
+	// mutators that will set values for the variables
+	void setMake();
+	void setModel();
+	void setColor();
+	void setLicenseNum();
+	void setMinutes();
+	
+parked car cpp:
+	void ParkedCar::setMake()
+{
+	make = "smaple";
+}
+
+void ParkedCar::setModel()
+{
+	model = "sample";
+}
+
+void ParkedCar::setColor()
+{
+	color = "sample";
+}
+
+void ParkedCar::setLicenseNum()
+{
+	licenseNum = "sample";
+}
+
+void ParkedCar::setMinutes()
+{
+	numOfMin = 0;
+}

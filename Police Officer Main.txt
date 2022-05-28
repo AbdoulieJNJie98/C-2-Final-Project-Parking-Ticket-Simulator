@@ -1,0 +1,48 @@
+#include "pch.h"
+#include "parkedcar.h"
+#include "parkingmeter.h"
+#include "parkingticket.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+#ifndef POLICEOFFICER_H
+#define POLICEOFFICER_H
+
+class PoliceOfficer
+{
+private:
+	// variable decleration
+	string officerName; // used to hold officers name
+	string badgeNumber; // used to hold officers badge number
+
+public:
+	PoliceOfficer() //default constructor
+	{
+
+	}
+
+	// constructor with a parameter list that specifies the memeber varaible's values
+	PoliceOfficer(string, string);
+
+	// accessors that will return the values stored in officerName and badgeNumber
+	string getOfficerName()const; 
+	
+	string getBadgeNumber()const;
+
+	void setOfficerInfo(string, string);
+
+	// boolean function that will be used to help determine if the car will get a parking ticket or not,
+	// and referencs two object made by perviously made classes
+	bool isViolator(const ParkedCar &, const ParkingMeter &);
+
+	// function that will reference a ParkedCar object and a ParkingMeter object in order to
+	// create a temporary ParkingTicket object that will be used to reference the car's info
+	void issueTicket(const ParkedCar &, const ParkingMeter &);
+	
+	// friend functions that will overload the cin >> and cout << operators
+	friend istream &operator >> (istream &, PoliceOfficer &);
+	friend ostream &operator << (ostream &, const PoliceOfficer &);
+};
+#endif

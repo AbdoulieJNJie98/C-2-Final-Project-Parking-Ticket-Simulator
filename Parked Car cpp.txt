@@ -1,0 +1,95 @@
+#include "pch.h"
+#include "parkedcar.h"
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+// cpp file that will define the functions of the ParkedCar class
+
+string ParkedCar::getMake()const
+{
+	return make;
+}
+
+string ParkedCar::getModel()const
+{
+	return model;
+}
+
+string ParkedCar::getColor()const
+{
+	return color;
+}
+
+string ParkedCar::getLicenseNum()const
+{
+	return licenseNum;
+}
+
+
+// definition of the overloaded cout function
+ostream &operator << (ostream &strm, const ParkedCar &obj)
+{
+	return strm << "Make: " << obj.make << "\n"
+		<< "Model: " << obj.model << "\n"
+		<< "Color: " << obj.color << "\n"
+		<< "License Number: " << obj.licenseNum << "\n";
+}
+
+
+
+// overloaded cin >> operator
+istream &operator >> (istream &strim, ParkedCar &obj)
+{
+	cout << "Enter the car's make: ";
+	getline(strim, obj.make);
+	cout << endl;
+
+	cout << "Enter the car's model: ";
+	getline(strim, obj.model);
+	cout << endl;
+
+	cout << "Enter the car's color: ";
+	getline(strim, obj.color);
+	cout << endl;
+
+	cout << "Enter the car's license plate number: ";
+	getline(strim, obj.licenseNum);
+	cout << endl;
+
+	cout << "Enter the number of minutes the car was parked: ";
+	strim >> obj.numOfMin;
+	cout << endl;
+
+	// integer that will hold the number of attempts the person has to enter a valid value
+	int attempts = 5;
+
+	// while loop that will check the user's input, and produce an error message until the user enters
+	// a valid input, or reaches the max numbers of attempts
+	while (!cin || obj.numOfMin < 0)
+	{
+		cout << "Number of attempts left: " << (attempts) << "\n\n";
+
+		cout << "The value you entered is not valid, please enter a valid entry: ";
+		cin.clear();
+		cin.ignore();
+		strim >> obj.numOfMin;
+		cout << endl;
+
+		--attempts;
+		
+		// if statemnet that will end the program if the number of attempts have been reached
+		if (attempts == 0 && !cin)
+		{
+			cout << "The number of attempts had been reached.\n"
+				<< "The program will now shut down.\n";
+
+			exit(1);
+		}
+
+	}
+
+	return strim;
+}

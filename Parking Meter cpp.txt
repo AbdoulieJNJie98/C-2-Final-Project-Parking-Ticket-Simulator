@@ -1,0 +1,49 @@
+#include "pch.h"
+#include "parkingmeter.h"
+#include "parkingticket.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// cpp file that defines ParkingMeter class functions
+
+
+// function that will overload << operator
+istream &operator >> (istream &strim,  ParkingMeter &obj) 
+{
+
+		cout << "Enter the number of minutes the parking meter was paid for: ";
+		strim >> obj.purchasedMinutes;
+		cout << endl;
+
+		// integer that will hold the number of attempts the person has to enter a valid value
+		int attempts = 5;
+		
+		// while loop that will check the user's input, and produce an error message until the user enters
+		// a valid input, or reaches the max numbers of attempts
+		while (!cin || obj.purchasedMinutes < 0)
+		{
+			cout << "Number of attempts left: " << (attempts) << "\n\n";
+
+			cout << "The value you entered is not valid, please enter a valid entry: ";
+			cin.clear();
+			cin.ignore();
+			strim >> obj.purchasedMinutes;
+			cout << endl;
+
+			--attempts;
+
+			// if statement that will end the program if the number of attempts have been reached
+			if (attempts == 0 && !cin)
+			{
+				cout << "The number of attempts has been reached.\n"
+					<< "The program will now shut down.\n";
+
+				exit(1);
+			}
+
+		}
+
+		return strim;
+}

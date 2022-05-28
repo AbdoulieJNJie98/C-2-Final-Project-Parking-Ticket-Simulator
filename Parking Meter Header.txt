@@ -1,0 +1,38 @@
+#include "pch.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+#ifndef PARKINGMETER_H
+#define PARKINGMETER_H
+
+
+class ParkingMeter
+{
+private:
+	// variable that will hold the number of minutes that were purchased for parking spot
+	int purchasedMinutes;
+
+public:
+	ParkingMeter() // default constructor
+	{
+		purchasedMinutes = 0;
+	}
+
+	ParkingMeter(int minute) // constructor with parameter list
+	{
+		purchasedMinutes = minute;
+	}
+
+	// accessor that will return the number of minutes purchased
+	int getPurchasedMinutes()const
+	{
+		return purchasedMinutes;
+	}
+
+
+	// friend functions that will overload  >> operator
+	friend istream &operator >> (istream &, ParkingMeter &);
+};
+#endif

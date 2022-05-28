@@ -1,0 +1,104 @@
+#include "pch.h"
+#include "policeofficer.h"
+#include "parkingticket.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// file that will define functions made within PoliceOfficer class
+
+// constructor with a parameter list that specifies the memeber varaible's values
+PoliceOfficer::PoliceOfficer(string name, string badge)
+{
+	setOfficerInfo(name, badge);
+}
+
+
+string PoliceOfficer::getOfficerName()const
+{
+	return officerName;
+}
+
+string PoliceOfficer::getBadgeNumber()const
+{
+	return badgeNumber;
+}
+
+void PoliceOfficer::setOfficerInfo(string name, string badge)
+{
+	if (!name.empty())
+	{
+		 officerName= name;
+	}
+	else
+	{
+		getOfficerName();
+	}
+
+	if (!badge.empty())
+	{
+		badgeNumber = badge;
+	}
+	else
+	{
+		getBadgeNumber();
+	}
+}
+
+/*
+	this function will be used to indicate weather or not the car parked has
+	violated its parking time by comparing two objects from the ParkedCar class
+	and ParkingMeter class
+ */
+
+bool PoliceOfficer::isViolator(const ParkedCar &car, const ParkingMeter &meter)
+{
+	bool status = false; // defualt boolean value
+
+	// if statement that will return true if minutes parked is greater than purchased minutes
+	if (car.getMinutes() > meter.getPurchasedMinutes())
+	{
+		status = true;
+	}
+
+	return status;
+}
+
+/*
+	This function will pass 3 objectes to the ticket class if once the right
+	requierments are met
+*/
+void PoliceOfficer::issueTicket(const ParkedCar &car, const ParkingMeter &meter)
+{
+	// temporary parking ticket object that will refernce information stored in
+	// the other classes objects
+	ParkingTicket tempTicket(car, *this, meter);
+
+}
+
+// overloaded cout << operator
+ostream &operator << (ostream &strm, const PoliceOfficer &obj)
+{
+	return strm << "Officer Name: " << obj.officerName << "\n"
+				<< "Officer Badge Number: " << obj.badgeNumber << "\n";
+}
+
+// overloaded cin >> operator
+istream &operator >> (istream &strim, PoliceOfficer &obj)
+{
+
+	cout << "Enter the Officer's name: ";
+	cin.clear();
+	cin.ignore();
+	getline(strim, obj.officerName);
+	cout << endl;
+
+	cout << "Enter the Officer's Badge Number: ";
+	cin.clear();
+	cin.ignore();
+	getline(strim, obj.badgeNumber);
+	cout << endl;
+
+	return strim;
+}

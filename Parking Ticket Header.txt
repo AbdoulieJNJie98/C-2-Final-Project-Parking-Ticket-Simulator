@@ -1,0 +1,58 @@
+#ifndef PARKINGTICKET_H
+#define PARKINGTICKET_H
+
+#include "pch.h"
+#include "parkedcar.h"
+#include "parkingmeter.h"
+#include "policeofficer.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class ParkingTicket
+{
+private:
+	// constant doubles that will be used to reference the amount a parking fine will be
+	// after an hour or more has passed over the purchased number of minutes
+
+	const double BASE_FINE = 25; // fine amount that will be used for the first hour or less
+	const double HOURLY_FINE = 10; // fine amount that will be used for any time passed the first hour
+
+	double fine; //variable used to repersent the starting fine amount
+	double additionalFine; // variable used to repersent the additional fine amount after the first hour
+
+	// class objects
+	PoliceOfficer officer;
+	ParkedCar car;
+	ParkingMeter meter;
+
+public:
+
+	// default constructor
+	ParkingTicket()
+	{
+		fine = 0;
+		additionalFine = 0;
+	}
+
+	// constructor that will take 3 object derived from the other classes
+	ParkingTicket(const ParkedCar &, const PoliceOfficer &, const ParkingMeter &);
+
+	// function that will be used to calculate the total fine amount of the ticket
+	void calculateFine();
+	
+	// function used to print the ticket in a specific format
+	void printTicket();
+
+	// accesors that will return the values stored in fine and additional fine
+	double getFine()const
+	{
+		return fine;
+	}
+	double getAdditionalFine()const
+	{
+		return additionalFine;
+	}
+};
+#endif

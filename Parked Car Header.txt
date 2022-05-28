@@ -1,0 +1,56 @@
+#ifndef PARKEDCAR_H
+#define PARKEDCAR_H
+
+#include "pch.h"
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+class ParkedCar
+{
+
+private:
+	// variable declaration
+	string make;
+	string model;
+	string color;
+	string licenseNum;
+	int numOfMin;
+
+public:
+	ParkedCar() // default constructor
+	{
+		make = "sample";
+		model = "sample";
+		color = "sample";
+		licenseNum = "sample";
+		numOfMin = 0;
+	}
+	
+	// constructor that has a parameter list
+	ParkedCar(string carMake, string carModel, string carColor, string carLicenseNum, int minutes)
+	{
+		make = carMake;
+		model = carModel;
+		color = carColor;
+		licenseNum = carLicenseNum;
+		numOfMin = minutes;
+	}
+
+	// accessors that will return the variables
+	string getMake()const;
+	string getModel()const;
+	string getColor()const;
+	string getLicenseNum()const;
+	int getMinutes()const
+	{
+		return numOfMin;
+	}
+
+	// friend functions that will overload << operator and >> operator
+	friend ostream &operator << (ostream &, const ParkedCar &);
+	friend istream &operator >> (istream &, ParkedCar &);
+};
+#endif

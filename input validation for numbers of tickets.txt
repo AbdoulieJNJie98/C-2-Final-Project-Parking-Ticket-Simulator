@@ -1,0 +1,68 @@
+	// function call that will validate input
+	checkNumberOfTickets(isNumberOfTicketsValid(numberOfTickets), numberOfTickets);
+	
+	
+/*
+	This function will be used to check input of the number of tickets.
+	If the number of tickets are entered incorrectly 5 times, the program
+	will shut down.
+*/
+int checkNumberOfTickets(bool isTicketValid, int &tickets)
+{
+	// This integer will hold the number of times the user entered in wrong inputs
+	int attempts = 5;
+
+	// loop that will be used to ensure valid input is entered
+	if (!isTicketValid)
+	{
+		while (!isTicketValid)
+		{
+
+
+			cout << "Number of attempts left: " << (attempts) << "\n\n";
+
+			cout << "The input entered was invalid, please enter a valid entry:\n";
+
+			cin.clear();
+			cin.ignore();
+			cin >> tickets;
+
+			--attempts;
+
+
+			if (isTicketValid && attempts != 0)
+			{
+				break;
+				return tickets;
+			}
+
+			if (attempts == 0 && !isTicketValid)
+			{
+				cout << "The number of attemps has been reached.\n"
+					<< "The program will now shut down.\n";
+
+				return 0;
+			}
+		}
+	}
+
+}
+
+
+int checkNumberOfTickets(bool, int &);
+
+
+	/*
+	These maps will hold values that will be used to ensure that the user
+	enters valid car makes, car models and colors
+*/
+
+// un-order map that will hold valid car make and model
+multimap <string, string> makeAndModel =
+{
+	{"Honda" , "Civic"}, {"Honda", "Accord"}, {"Honda", "Crv"}, {"Honda", "Fit"},
+	{"Honda", "Odyssey"}, {"Honda", "Civic Type R"}, {"Honda", "Piolt" }, {"Honda", "Civic Si"},
+	 {"Honda, Honda"}
+};
+
+
